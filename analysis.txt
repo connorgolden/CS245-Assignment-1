@@ -1,0 +1,40 @@
+My implementations consist of a single-char-per-node trie which I am calling Tree and a Prefix Trie which is the Trie class.
+
+
+For Trie, the main class, I attempted to follow the diagram in the assignment PDF exactly. That diagram showed each node
+containing the common prefix of the child words. For example. If we have the words "tea" and "tee"; "te" would be the
+value of their parent node. The parent of "te" would likely be "t" as there are other words like "top". Each node in
+this implementation has a string for the word itself, or the prefix of the word, as well as a list of children 27 long.
+This means that each node can have a path to go for each unique character a-z and apostrophe (which is hardcoded as 27).
+For example, if the parent is "te" and the word "tea" is added, it will put "tea" in space 0 of children because "a" is
+the first char the parent doesn't contain.
+
+
+For Tree, the single char implementation is similar in concept but completely different to implement. It uses (like it
+sounds) a single char per node. For example, if we add the word "tea" to this tree. it would look like:
+(root)->(t)->(e)->(a). Each node has a list of children. For this one I decided to try a linked list instead of an array
+to change things up a bit.
+
+
+Performance Analysis
+(Runtimes for each function are in the javadocs above them in the code)
+
+Trie:
+Despite unnecessarily keeping the common start of the word in the following nodes, it is more space efficent than the
+single char implementation in Tree. Despite having the same amount of chars in both trees (as they are filled with same
+dictionary) this implementation has only the amount of nodes absolutely needed, and thus less overhead. It has less
+overhead in terms of creating nodes, as well as it will almost always take less operations to find words in the tree
+because the worst case will be the same as single char version. Where you have to iterate one node per char. The best
+case, you will find your whole word immediately after node. Average case depends on the size and variation of the
+dictionary you implement.
+
+This algorithm is very efficient on search and add, as you know exactly where a word either needs to be found or where
+it needs to be added based on the word itself. Therefore the runtime of the search and add are worst case O(n) where n
+is the length of the input word. However, for the prefix tree, the average case is actually somewhat less than this,
+especially if there are not a lot of words in the dictionary. It will start at O(1) and slowly increase up to O(n) as
+more words are added.
+
+
+Tree:
+For add, the Worst case is O(n) where n is the length of string to insert, it has to go through a node per character in
+the word. It is the same runtime for searching as it has to go through one node per char. This is still pretty efficent.
